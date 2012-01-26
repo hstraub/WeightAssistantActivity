@@ -66,6 +66,7 @@ public class AddEntry extends Activity {
     					sb,
     					Toast.LENGTH_LONG );
     			AddEntry.this.datum.show( );
+    			AddEntry.this.finish( );
     			
 			}
 		});
