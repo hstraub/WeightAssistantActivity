@@ -15,4 +15,10 @@
         android:layout_height="wrap_content"
         android:text="@string/button_add" />
 
+    <Button
+        android:id="@+id/buttonDisplayData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_display_data" />
+
 </LinearLayout>

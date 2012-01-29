@@ -17,7 +17,18 @@ public class WeightAssistantActivity extends Activity {
         buttonNewEntry.setOnClickListener( new View.OnClickListener( ) {
 			@Override
 			public void onClick( View view ) {
-	        	startActivity( new Intent( WeightAssistantActivity.this, AddEntry.class ) );
+	        	startActivity( new Intent( WeightAssistantActivity.this,
+	        			AddEntry.class ) );
+			}
+		} );
+        
+        Button buttonDisplayData = ( Button ) findViewById( R.id.buttonDisplayData );
+        buttonDisplayData.setOnClickListener( new View.OnClickListener( ) {
+			@Override
+			public void onClick(View v) {
+				startActivity( new Intent( WeightAssistantActivity.this,
+						DisplayData.class ) );
+				
 			}
 		} );
     }
