@@ -9,16 +9,26 @@
         android:layout_height="wrap_content"
         android:text="@string/hello" />
 
-    <Button
-        android:id="@+id/buttonAddEntry"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_add" />
+        android:weightSum="1.0" >
 
-    <Button
-        android:id="@+id/buttonDisplayData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_display_data" />
+        <Button
+            android:id="@+id/buttonAddEntry"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.5"
+            android:text="@string/button_add" />
+
+        <Button
+            android:id="@+id/buttonDisplayData"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.5"
+            android:text="@string/button_display_data" />
+
+    </LinearLayout>
 
 </LinearLayout>
