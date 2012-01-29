@@ -7,19 +7,21 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:weightSum="1.0" >
 
         <TextView
             android:id="@+id/textEntryDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.35"
             android:layout_height="wrap_content"
             android:text="@string/entry_description" />
 
         <EditText
             android:id="@+id/editWeight"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.06"
+            android:layout_weight="0.30"
             android:inputType="numberDecimal" >
             
             <requestFocus />
@@ -28,27 +30,31 @@
         
         <TextView
             android:id="@+id/textEntryKg"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.35"            
             android:layout_height="wrap_content"
             android:text="@string/entry_kg" />
-
         
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/entry_save" />    
+    
     <DatePicker
         android:id="@+id/entrydatePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
 
     <TimePicker
         android:id="@+id/entrytimePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/entry_save" />
+        android:layout_gravity="center_horizontal" />
+
+
 
 </LinearLayout>
