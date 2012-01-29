@@ -15,7 +15,7 @@ public class DisplayData extends ListActivity {
 	
 	private static final int DIALOG_ID = 100;
 	private static final String fields[] = { DbHelper.C_DATETIME,
-		DbHelper.C_GEWICHT };
+		DbHelper.C_GEWICHT, DbHelper.C_ID };
 	private CursorAdapter dataSource;
 	
 	@Override
