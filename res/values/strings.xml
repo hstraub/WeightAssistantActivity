@@ -10,5 +10,7 @@
     <string name="addItem">Add Item</string>
     <string name="cancelItem">Cancel</string>
     <string name="button_display_data">Zeige Daten</string>
+    <string name="button_import">Import</string>
+    <string name="button_export">Export</string>
 
 </resources>

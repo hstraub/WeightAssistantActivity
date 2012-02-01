@@ -31,4 +31,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1.0"
+        android:orientation="horizontal" >
+        
+        <Button
+            android:id="@+id/buttonImport"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_import" />
+
+        <Button
+            android:id="@+id/buttonExport"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_export" />
+
+    </LinearLayout>
+
 </LinearLayout>
