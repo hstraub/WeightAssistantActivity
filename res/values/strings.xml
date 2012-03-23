@@ -12,5 +12,6 @@
     <string name="button_display_data">Zeige Daten</string>
     <string name="button_import">Import</string>
     <string name="button_export">Export</string>
+    <string name="simple_graph">Gewichtskurve</string>
 
 </resources>

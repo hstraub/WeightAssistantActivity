@@ -19,6 +19,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class WeightAssistantActivity extends Activity {
 	private static String C_CSV_FILENAME = "/weightassistant.csv";
+	private WeightOverviewGraph weightOverviewGraph = new WeightOverviewGraph( );
 	
     /** Called when the activity is first created. */
     @Override
@@ -61,6 +62,17 @@ public class WeightAssistantActivity extends Activity {
 				
 			}
 		} );
+
+        Button buttonSimpleGraph = ( Button ) findViewById( R.id.buttonSimpleGraph );
+        buttonSimpleGraph.setOnClickListener( new View.OnClickListener( ) {
+        	@Override
+        	public void onClick(View v) {
+        		Intent intent = null;
+        		intent = weightOverviewGraph.execute( WeightAssistantActivity.this );
+        		startActivity( intent );
+
+        	}
+        } );
 
     }
     

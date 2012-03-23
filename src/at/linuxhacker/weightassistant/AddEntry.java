@@ -47,7 +47,7 @@ public class AddEntry extends Activity {
 			public void onClick(View v) {
 				StringBuilder sb = new StringBuilder( );
 				Formatter f = new Formatter( sb, Locale.GERMAN );
-				f.format( "%4d-%02d-%02d %02d:%02d:00.00", 
+				f.format( "%4d-%02d-%02d %02d:%02d:00", 
 						AddEntry.this.datePicker.getYear( ),
 						AddEntry.this.datePicker.getMonth( ) + 1,
 						AddEntry.this.datePicker.getDayOfMonth( ),
@@ -55,7 +55,11 @@ public class AddEntry extends Activity {
 						AddEntry.this.timePicker.getCurrentMinute( )
 						);
 				AddEntry.this.dateIso = sb.toString( );
-				AddEntry.this.gewicht = Double.parseDouble( AddEntry.this.kg.getText( ).toString( ) );
+				try {
+					AddEntry.this.gewicht = Double.parseDouble( AddEntry.this.kg.getText( ).toString( ) );
+				} catch ( NumberFormatException e ) {
+					return;
+				}
 				ContentValues values = new ContentValues( );
 				values.put( DbHelper.C_DATETIME, AddEntry.this.dateIso );
 				values.put( DbHelper.C_GEWICHT, AddEntry.this.gewicht );
@@ -75,7 +79,13 @@ public class AddEntry extends Activity {
         kg.addTextChangedListener( new TextWatcher( ) {
         	@Override
         	public void onTextChanged( CharSequence s, int start, int before, int count ) {
-        		double value = Double.parseDouble( AddEntry.this.kg.getText( ).toString( ) );
+        		String inputValue =  AddEntry.this.kg.getText( ).toString( );
+        		//double value = Double.parseDouble( AddEntry.this.kg.getText( ).toString( ) );
+        		if ( inputValue.length( ) == 0 ) {
+        			AddEntry.this.buttonSave.setEnabled( false );
+        			return;
+        		}
+        		double value = Double.parseDouble( inputValue );
         		if ( value != 0 ) {
         			AddEntry.this.buttonSave.setEnabled( true );
         		}

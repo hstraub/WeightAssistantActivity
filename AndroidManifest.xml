@@ -27,6 +27,8 @@
         <activity android:name=".DisplayData"
             android:label="Zeige Daten">
         </activity>
+
+        <activity android:name="org.achartengine.GraphicalActivity" />
         
   	</application>
 
