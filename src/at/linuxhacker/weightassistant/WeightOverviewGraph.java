@@ -1,12 +1,11 @@
 package at.linuxhacker.weightassistant;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.ListIterator;
+
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
@@ -17,14 +16,10 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
+
 import android.graphics.Color;
 
 public class WeightOverviewGraph {
-	
-	private DbHelper dbHelper;
-	private SQLiteDatabase db;
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
 	private WeightMeasurmentSeries weightMeasurmentSeries;
@@ -32,8 +27,6 @@ public class WeightOverviewGraph {
 	private List<Double> series5;
 
 	public Intent execute(Context context) {
-		this.dbHelper = new DbHelper( context );
-		this.db = dbHelper.getReadableDatabase( );
 		this.dataset = new XYMultipleSeriesDataset();
 		this.renderer = new XYMultipleSeriesRenderer( );
 

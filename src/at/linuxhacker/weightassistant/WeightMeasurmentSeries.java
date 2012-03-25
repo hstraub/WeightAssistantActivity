@@ -2,6 +2,7 @@ package at.linuxhacker.weightassistant;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -14,8 +15,7 @@ public class WeightMeasurmentSeries {
 	private DbHelper dbHelper;
 	private SQLiteDatabase db;
 	public List<MeasuringPoint> measurmentSeries;
-	public List<WeekStatistic> weekStatisticList;
-	private Hashtable<String, MeasuringPoint> weeklyHash;
+	private Hashtable<String, WeeklyStatistic> weeklyHash;
 	
 	WeightMeasurmentSeries( Context context ) {
 		this.dbHelper = new DbHelper( context );
@@ -24,15 +24,15 @@ public class WeightMeasurmentSeries {
 	
 	void readAll( ) {
 		this.measurmentSeries = new ArrayList<MeasuringPoint>( );
-		this.weekStatisticList = new ArrayList<WeekStatistic>( );
-		SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		this.weeklyHash = new Hashtable<String, WeeklyStatistic>( );
+		SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		Date myDate = null;
 		
+		Cursor cur = this.db.query( this.dbHelper.TABLE, 
+				new String[] { this.dbHelper.C_ID, 
+				this.dbHelper.C_DATETIME, this.dbHelper.C_GEWICHT },
+				null, null, null, null, null );
 		try {
-			Cursor cur = this.db.query( this.dbHelper.TABLE, 
-					new String[] { this.dbHelper.C_ID, 
-					this.dbHelper.C_DATETIME, this.dbHelper.C_GEWICHT },
-					null, null, null, null, null );
 			cur.moveToFirst( );
 			int rowCount = cur.getCount( );
 			for( int i = 0; i < rowCount; i++ ) {
@@ -44,24 +44,40 @@ public class WeightMeasurmentSeries {
 				cur.moveToNext( );
 			}
 		} catch ( Exception e ) {
+			System.out.println ("Exception in readAll: " + e );
+			Exception y;
+			y = e;
+		} finally {
+			cur.close( );
+		}
+	}
+	
+	List<WeeklyStatistic> getWeeklyStatisticList( ) {
+		List<WeeklyStatistic> weeklyStatisticList = new ArrayList<WeeklyStatistic>( );
+		
+		String[] keys = ( String[] ) this.weeklyHash.keySet( ).toArray( new String[0] );
+		Arrays.sort( keys );
+		for( String key : keys ) {
+			weeklyStatisticList.add( this.weeklyHash.get( key ) );
+		}
+		return weeklyStatisticList;
+	}
+	
+	protected void addPointToWeekly( MeasuringPoint point ) {
+		String weekOfYear = point.getWeekOfYear( );
+		
+		if ( this.weeklyHash.get( weekOfYear ) == null ) {
+			this.weeklyHash.put( weekOfYear, new WeeklyStatistic( weekOfYear ) );
+		}
+		try {
+			System.out.println( "Add: " + weekOfYear );
+			this.weeklyHash.get( weekOfYear ).addMeasurePoint( point );
+		} catch( Exception e ) {
+			// FIXME
 			Exception y;
 			y = e;
 		}
 	}
 	
-	protected void addPointToWeekly( MeasuringPoint point ) {
-		try {
-			if ( this.weekStatisticList.size( ) == 0 ) {
-				this.weekStatisticList.add( new WeekStatistic( point ) );
-			} else {
-				try {
-					this.weekStatisticList.get( this.weekStatisticList.size( ) -1 ).addMeasurePoint( point );
-				} catch ( Exception e ) {
-					this.weekStatisticList.add( new WeekStatistic( point ) );
-				}
-			}
-		} catch ( Exception e ) {
-			// FIXME
-		}
-	}
+	
 }

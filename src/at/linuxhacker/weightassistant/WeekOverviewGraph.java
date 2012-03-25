@@ -25,7 +25,7 @@ public class WeekOverviewGraph {
 	private SQLiteDatabase db;
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
-	private List<WeekStatistic> weekStatisticList;
+	private List<WeeklyStatistic> weeklyStatisticList;
 	private WeightMeasurmentSeries weightMeasurmentSeries;
 	
 	public Intent execute( Context context ) {
@@ -51,22 +51,26 @@ public class WeekOverviewGraph {
 		this.renderer.setAxesColor( Color.GRAY );
 		this.renderer.setLabelsColor( Color.LTGRAY );
 		this.renderer.setYLabels(10);
+		// setXLabals ist wichtig, sonst überschreibt er das mit den Labels
+		this.renderer.setXLabels( 0 );
 		this.renderer.setAxisTitleTextSize( 24 );
 		this.renderer.setChartTitleTextSize( 28 );
-		this.renderer.setLabelsTextSize( 23 );
+		this.renderer.setLabelsTextSize( 20 );
 		this.renderer.setLegendTextSize( 23 );
 		this.renderer.setPointSize(5f);
+		// this.renderer.setBarSpacing(0.5);
 		// top, left, button, right
 		this.renderer.setMargins(new int[] { 20, 40, 20, 30 });
 	}
 	
 	protected void setSeries( ) {
 		TimeSeries timeSeries = ( TimeSeries ) new TimeSeries( "KW" );
-		int length = this.weightMeasurmentSeries.weekStatisticList.size( );
+		List<WeeklyStatistic> weeklyStatisticList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
+		int length = weeklyStatisticList.size( );
 		for ( int i = 0; i < length; i++ ) {
 			timeSeries.add( 
-					this.weightMeasurmentSeries.weekStatisticList.get( i ).weekPoints.get( 0 ).getDate(),
-					this.weightMeasurmentSeries.weekStatisticList.get( i ).average
+					weeklyStatisticList.get( i ).weeklyPoints.get( 0 ).getDate(),
+					weeklyStatisticList.get( i ).average
 					);
 		}
 		
@@ -90,18 +94,20 @@ public class WeekOverviewGraph {
 	
 	protected void setRangeSeries( ) {
 		RangeCategorySeries series = new RangeCategorySeries( "KW Übersicht" );
-		int length = this.weightMeasurmentSeries.weekStatisticList.size( );
+		List<WeeklyStatistic> weeklyStatisticList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
+		int length = weeklyStatisticList.size( );
 		for ( int i = 0; i < length; i++ ) {
 			series.add( 
-					this.weightMeasurmentSeries.weekStatisticList.get( i ).min,
-					this.weightMeasurmentSeries.weekStatisticList.get( i ).max
+					weeklyStatisticList.get( i ).min,
+					weeklyStatisticList.get( i ).max
 					);
 		}
 		this.dataset.addSeries( series.toXYSeries( ) );
 		int[] colors = new int[] { Color.CYAN };
 		this.renderer = this.buildBarRenderer( colors );
 		for ( int i = 0; i < length; i++ ) {
-			this.renderer.addXTextLabel( i, "" + this.weightMeasurmentSeries.weekStatisticList.get( i ).weekOfYear );
+			String label = weeklyStatisticList.get( i ).getWeekOfTheYearWithoutYear( );
+			this.renderer.addXTextLabel( i + 1 , label ); // Der Arsch startet mit 1 !!!
 		}
 	    SimpleSeriesRenderer r = renderer.getSeriesRendererAt(0);
 	    r.setDisplayChartValues(true);
