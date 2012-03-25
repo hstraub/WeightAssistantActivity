@@ -3,6 +3,7 @@ package at.linuxhacker.weightassistant;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 
 import android.content.Context;
@@ -14,6 +15,7 @@ public class WeightMeasurmentSeries {
 	private SQLiteDatabase db;
 	public List<MeasuringPoint> measurmentSeries;
 	public List<WeekStatistic> weekStatisticList;
+	private Hashtable<String, MeasuringPoint> weeklyHash;
 	
 	WeightMeasurmentSeries( Context context ) {
 		this.dbHelper = new DbHelper( context );
