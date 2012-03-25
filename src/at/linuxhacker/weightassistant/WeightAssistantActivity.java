@@ -21,12 +21,15 @@ public class WeightAssistantActivity extends Activity {
 	private static String C_CSV_FILENAME = "/weightassistant.csv";
 	private WeightOverviewGraph weightOverviewGraph = new WeightOverviewGraph( );
 	private WeekOverviewGraph weekOverviewGraph = new WeekOverviewGraph( );
+	private WeightMeasurmentSeries weightMeasurmentSeries;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        this.weightMeasurmentSeries = new WeightMeasurmentSeries( WeightAssistantActivity.this );
+        this.weightMeasurmentSeries.readAll( );
         
         Button buttonNewEntry = ( Button ) findViewById( R.id.buttonAddEntry );
         buttonNewEntry.setOnClickListener( new View.OnClickListener( ) {
@@ -69,6 +72,7 @@ public class WeightAssistantActivity extends Activity {
         	@Override
         	public void onClick(View v) {
         		Intent intent = null;
+        		weightOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weightOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
 
@@ -80,6 +84,7 @@ public class WeightAssistantActivity extends Activity {
         	@Override
         	public void onClick(View v) {
         		Intent intent = null;
+        		weekOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weekOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
 

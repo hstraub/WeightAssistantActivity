@@ -27,7 +27,7 @@ public class WeightOverviewGraph {
 	private SQLiteDatabase db;
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
-	private List<MeasuringPoint> measurmentSeries;
+	private WeightMeasurmentSeries weightMeasurmentSeries;
 	private List<Double> series3;
 	private List<Double> series5;
 
@@ -37,13 +37,16 @@ public class WeightOverviewGraph {
 		this.dataset = new XYMultipleSeriesDataset();
 		this.renderer = new XYMultipleSeriesRenderer( );
 
-		this.readDB( );
 		this.series3 = this.calcAverage( 3 );
 		this.series5 = this.calcAverage( 5 );
 		setChartSettings( );
 		setSeries( );
 		return ChartFactory.getTimeChartIntent(context, this.dataset,
 				this.renderer, "yyyy-MM-dd");
+	}
+	
+	public void setWeightMeasurmentSeries( WeightMeasurmentSeries weightMeasurmentSeries ) {
+		this.weightMeasurmentSeries = weightMeasurmentSeries;
 	}
 	
 	protected void setChartSettings( ) {
@@ -69,15 +72,15 @@ public class WeightOverviewGraph {
 		
 		int length3 = this.series3.size( );
 		int length5 = this.series5.size( );
-		int maxLength = this.measurmentSeries.size( );
+		int maxLength = this.weightMeasurmentSeries.measurmentSeries.size( );
 		for ( int i = 0; i < maxLength; i++ ) {
 			int pos3 = length3 - maxLength + i;
 			int pos5 = length5 - maxLength + i;
 			if ( pos5 < 0 || pos3 < 0 ) {
 				continue;
 			}
-			Date time = this.measurmentSeries.get( i ).getDate( );
-			timeSeries.add( time, this.measurmentSeries.get( i ).getWeight( ) );
+			Date time = this.weightMeasurmentSeries.measurmentSeries.get( i ).getDate( );
+			timeSeries.add( time, this.weightMeasurmentSeries.measurmentSeries.get( i ).getWeight( ) );
 			timeSeries3.add( time, this.series3.get( pos3 ) );
 			timeSeries5.add( time, this.series5.get( pos5 ) );
 		}
@@ -104,43 +107,19 @@ public class WeightOverviewGraph {
 	
 	protected List<Double> calcAverage( int order ) {
 		List<Double> series = new ArrayList<Double>( );
-		if ( this.measurmentSeries.size() < order ) {
+		if ( this.weightMeasurmentSeries.measurmentSeries.size() < order ) {
 			return series;
 		}
 		
-		for ( int i = this.measurmentSeries.size( ) -1; i >= order -1; i-- ) {
-			double average = this.measurmentSeries.get( i ).getWeight( );
+		for ( int i = this.weightMeasurmentSeries.measurmentSeries.size( ) -1; i >= order -1; i-- ) {
+			double average = this.weightMeasurmentSeries.measurmentSeries.get( i ).getWeight( );
 			for ( int j = 1; j < order; j++ ) {
-				average += this.measurmentSeries.get( i - j ).getWeight( );
+				average += this.weightMeasurmentSeries.measurmentSeries.get( i - j ).getWeight( );
 			}
 			average = average / order;
 			series.add( average );
 		}
 		Collections.reverse( series );
 		return series;
-	}
-
-	protected void readDB( ) {
-		this.measurmentSeries = new ArrayList<MeasuringPoint>( );
-		SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-		Date myDate = null;
-		
-		try {
-			Cursor cur = this.db.query( this.dbHelper.TABLE, 
-					new String[] { this.dbHelper.C_ID, 
-					this.dbHelper.C_DATETIME, this.dbHelper.C_GEWICHT },
-					null, null, null, null, null );
-			cur.moveToFirst( );
-			int rowCount = cur.getCount( );
-			for( int i = 0; i < rowCount; i++ ) {
-				String tmp =  cur.getString( 1 );
-				myDate = dateFormat.parse( tmp );
-				this.measurmentSeries.add( new MeasuringPoint( myDate, cur.getDouble( 2 ) ) );
-				cur.moveToNext( );
-			}
-		} catch ( Exception e ) {
-			Exception y;
-			y = e;
-		}
 	}
 }
