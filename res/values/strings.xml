@@ -13,5 +13,6 @@
     <string name="button_import">Import</string>
     <string name="button_export">Export</string>
     <string name="simple_graph">Gewichtskurve</string>
+    <string name="week_graph">Wochen Graph</string>
 
 </resources>
