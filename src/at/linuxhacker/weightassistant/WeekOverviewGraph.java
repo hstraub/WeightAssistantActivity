@@ -45,7 +45,7 @@ public class WeekOverviewGraph {
 	}
 	
 	protected void setChartSettings( ) {
-		this.renderer.setChartTitle( "KW Übersicht" );
+		this.renderer.setChartTitle( "Wochenstatistik" );
 		this.renderer.setXTitle( "KW" );
 		this.renderer.setYTitle( "Gewicht in kg" );
 		this.renderer.setAxesColor( Color.GRAY );
