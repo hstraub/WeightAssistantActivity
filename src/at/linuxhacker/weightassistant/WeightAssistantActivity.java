@@ -18,10 +18,12 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 public class WeightAssistantActivity extends Activity {
+	private static final int ACTIVITY_ADD_ENTRY = 1;
 	private static String C_CSV_FILENAME = "/weightassistant.csv";
 	private WeightOverviewGraph weightOverviewGraph = new WeightOverviewGraph( );
 	private WeekOverviewGraph weekOverviewGraph = new WeekOverviewGraph( );
 	private WeightMeasurmentSeries weightMeasurmentSeries;
+	int dataUpdated = 0;
 	
     /** Called when the activity is first created. */
     @Override
@@ -35,8 +37,12 @@ public class WeightAssistantActivity extends Activity {
         buttonNewEntry.setOnClickListener( new View.OnClickListener( ) {
 			@Override
 			public void onClick( View view ) {
+				/* alt
 	        	startActivity( new Intent( WeightAssistantActivity.this,
 	        			AddEntry.class ) );
+	        	*/
+	        	startActivityForResult( new Intent( WeightAssistantActivity.this,
+	        			AddEntry.class ), WeightAssistantActivity.ACTIVITY_ADD_ENTRY );
 			}
 		} );
         
@@ -54,7 +60,7 @@ public class WeightAssistantActivity extends Activity {
         	@Override
 			public void onClick(View v) {
 				WeightAssistantActivity.this.csvImport( );
-				
+				WeightAssistantActivity.this.dataUpdated = 1;
 			}
 		} );
 
@@ -72,6 +78,8 @@ public class WeightAssistantActivity extends Activity {
         	@Override
         	public void onClick(View v) {
         		Intent intent = null;
+        		
+        		WeightAssistantActivity.this.checkAndUpdateData( );
         		weightOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weightOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
@@ -84,6 +92,8 @@ public class WeightAssistantActivity extends Activity {
         	@Override
         	public void onClick(View v) {
         		Intent intent = null;
+        		
+        		WeightAssistantActivity.this.checkAndUpdateData( );
         		weekOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weekOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
@@ -91,6 +101,21 @@ public class WeightAssistantActivity extends Activity {
         	}
         } );
         
+    }
+    
+    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
+    	if ( requestCode == WeightAssistantActivity.ACTIVITY_ADD_ENTRY ) {
+    		if ( resultCode == RESULT_OK ) {
+    			this.dataUpdated = 1;
+    		}
+    	}
+    }
+    
+    protected void checkAndUpdateData( ) {
+    	if ( this.dataUpdated == 1 ) {
+    		this.weightMeasurmentSeries.readAll( );
+    		this.dataUpdated = 0;
+    	}
     }
     
     public void csvImport( ) {

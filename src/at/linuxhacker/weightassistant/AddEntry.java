@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -70,6 +71,13 @@ public class AddEntry extends Activity {
     					sb,
     					Toast.LENGTH_LONG );
     			AddEntry.this.datum.show( );
+    			
+    			// Sending result back
+    			Bundle bundle = new Bundle( );
+    			Intent intent = new Intent( );
+    			intent.putExtras( bundle );
+    			setResult( RESULT_OK, intent );
+    			
     			AddEntry.this.finish( );
     			
 			}
