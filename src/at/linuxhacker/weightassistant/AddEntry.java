@@ -1,6 +1,8 @@
 package at.linuxhacker.weightassistant;
 
+import java.util.Calendar;
 import java.util.Formatter;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -35,6 +37,8 @@ public class AddEntry extends Activity {
       
         this.timePicker = ( TimePicker ) findViewById( R.id.entrytimePicker1 );
         this.timePicker.setIs24HourView( true );
+        GregorianCalendar calendar = new GregorianCalendar( );
+        this.timePicker.setCurrentHour( calendar.get( calendar.HOUR_OF_DAY ) );
         this.datePicker = ( DatePicker ) findViewById( R.id.entrydatePicker1 );
         this.dateIso = "";
         
