@@ -7,9 +7,13 @@ import java.util.List;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart.Type;
+import org.achartengine.chart.LineChart;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.chart.RangeBarChart;
 import org.achartengine.model.RangeCategorySeries;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYValueSeries;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
@@ -29,15 +33,17 @@ public class WeekOverviewGraph {
 	private WeightMeasurmentSeries weightMeasurmentSeries;
 	
 	public Intent execute( Context context ) {
+		String[] types = new String[] { RangeBarChart.TYPE, LineChart.TYPE };
 		this.dbHelper = new DbHelper( context );
 		this.db = dbHelper.getReadableDatabase( );
 		this.dataset = new XYMultipleSeriesDataset();
-
+		
 		this.setRangeSeries( );
+		this.setKwAverage( );
 		this.setChartSettings( );
 
-		return ChartFactory.getRangeBarChartIntent(context, this.dataset,
-				this.renderer, Type.DEFAULT, "Test" );
+		return ChartFactory.getCombinedXYChartIntent( context, this.dataset,
+				this.renderer, types, "Weight Assistant Wochenstatistik" );
 	}
 	
 	public void setWeightMeasurmentSeries( WeightMeasurmentSeries weightMeasurmentSeries ) {
@@ -63,22 +69,8 @@ public class WeekOverviewGraph {
 		this.renderer.setMargins(new int[] { 20, 40, 20, 30 });
 	}
 	
-	protected void setSeries( ) {
-		TimeSeries timeSeries = ( TimeSeries ) new TimeSeries( "KW" );
-		List<WeeklyStatistic> weeklyStatisticList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
-		int length = weeklyStatisticList.size( );
-		for ( int i = 0; i < length; i++ ) {
-			timeSeries.add( 
-					weeklyStatisticList.get( i ).weeklyPoints.get( 0 ).getDate(),
-					weeklyStatisticList.get( i ).average
-					);
-		}
-		
-		this.dataset.addSeries( timeSeries );
-	}
-
 	protected XYMultipleSeriesRenderer buildBarRenderer(int[] colors) {
-		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer( );
 		renderer.setAxisTitleTextSize(16);
 		renderer.setChartTitleTextSize(20);
 		renderer.setLabelsTextSize(15);
@@ -90,7 +82,26 @@ public class WeekOverviewGraph {
 			renderer.addSeriesRenderer(r);
 		}
 		return renderer;
-	}	
+	}
+	
+	protected void setKwAverage( ) {
+		List<WeeklyStatistic> weeklyStatisticList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
+		XYValueSeries series = new XYValueSeries( "Durchschnitt" );
+		int length = weeklyStatisticList.size( );
+		for ( int i = 0; i < length; i++ ) {
+			series.add(
+					i + 1,
+					weeklyStatisticList.get( i ).average
+					);
+		}
+		this.dataset.addSeries( series );
+		XYSeriesRenderer avgRenderer = new XYSeriesRenderer( );
+		avgRenderer.setColor( Color.YELLOW );
+		avgRenderer.setPointStyle( PointStyle.CIRCLE );
+		avgRenderer.setFillPoints( true );
+		avgRenderer.setLineWidth( 3 );
+		this.renderer.addSeriesRenderer( avgRenderer );
+	}
 	
 	protected void setRangeSeries( ) {
 		RangeCategorySeries series = new RangeCategorySeries( "KW Übersicht" );
