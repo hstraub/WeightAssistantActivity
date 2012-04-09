@@ -1,43 +1,34 @@
 package at.linuxhacker.weightassistant;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
+import java.util.List;
 import org.achartengine.ChartFactory;
-import org.achartengine.chart.BarChart.Type;
 import org.achartengine.chart.LineChart;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.chart.RangeBarChart;
 import org.achartengine.model.RangeCategorySeries;
-import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYValueSeries;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 
+
 public class WeekOverviewGraph {
-	private DbHelper dbHelper;
-	private SQLiteDatabase db;
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
-	private List<WeeklyStatistic> weeklyStatisticList;
 	private WeightMeasurmentSeries weightMeasurmentSeries;
+	private double min;
+	private double max;
 	
 	public Intent execute( Context context ) {
 		String[] types = new String[] { RangeBarChart.TYPE, LineChart.TYPE };
-		this.dbHelper = new DbHelper( context );
-		this.db = dbHelper.getReadableDatabase( );
 		this.dataset = new XYMultipleSeriesDataset();
 		
+		this.determineMinMaxValues( );
 		this.setRangeSeries( );
 		this.setKwAverage( );
 		this.setChartSettings( );
@@ -46,6 +37,20 @@ public class WeekOverviewGraph {
 				this.renderer, types, "Weight Assistant Wochenstatistik" );
 	}
 	
+	private void determineMinMaxValues() {
+		List<WeeklyStatistic> weeklyStatisticList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
+		int length = weeklyStatisticList.size( );
+		
+		for ( int i = 0; i < length; i++ ) {
+			if ( this.min == 0 || this.min > weeklyStatisticList.get( i ).min ) {
+				this.min = weeklyStatisticList.get( i ).min;
+			}
+			if ( this.max == 0 || this.max < weeklyStatisticList.get( i ).max ) {
+				this.max = weeklyStatisticList.get( i ).max;
+			}
+		}		
+	}
+
 	public void setWeightMeasurmentSeries( WeightMeasurmentSeries weightMeasurmentSeries ) {
 		this.weightMeasurmentSeries = weightMeasurmentSeries;
 	}
@@ -125,7 +130,7 @@ public class WeekOverviewGraph {
 	    r.setChartValuesTextSize(20);
 	    r.setChartValuesSpacing(3);
 	    r.setGradientEnabled(true);
-	    r.setGradientStart(90, Color.GREEN);
-	    r.setGradientStop(99, Color.RED);
+	    r.setGradientStart( this.min - 1, Color.GREEN);
+	    r.setGradientStop( this.max + 1, Color.RED);
 	}
 }

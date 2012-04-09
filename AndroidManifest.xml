@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.linuxhacker.weightassistant"
     android:versionCode="1"
-    android:versionName="0.13" >
+    android:versionName="0.14" >
 
     <uses-sdk android:minSdkVersion="10" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -27,7 +27,11 @@
         <activity android:name=".DisplayData"
             android:label="Zeige Daten">
         </activity>
-
+        
+        <activity android:name=".PrefsActivity"
+            android:label="@string/titlePrefs">
+        </activity>
+        
         <activity android:name="org.achartengine.GraphicalActivity" />
         
   	</application>

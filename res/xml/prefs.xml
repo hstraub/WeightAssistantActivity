@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <EditTextPreference android:title="Größe in cm"
+        android:summary="Eingabe der Größe in cm"
+        android:key="size" android:defaultValue="180"/>
+    <EditTextPreference android:title="Zielgewicht" android:summary="Ziengewicht in kg" android:key="prefTargetWeight"/>
+    
+
+</PreferenceScreen>

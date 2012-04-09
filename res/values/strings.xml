@@ -14,6 +14,19 @@
     <string name="button_export">Export</string>
     <string name="simple_graph">Gewichtskurve</string>
     <string name="week_graph">Wochen Graph</string>
-
-
+    <string name="titlePrefs">Einstellungen</string>
+    <string name="text_graphics">Graphiken</string>
+    <string name="text_dataHandling">Datenverwaltung</string>
+    <string name="text_dataInput">Gewichtseingabe</string>
+    <string name="text_myData_sizeHeader">Größe</string>
+    <string name="text_myData_size">k.A.</string>
+    <string name="text_personalData">Eigene Angaben</string> 
+    <string name="text_myData_targetWeightHeader">Ziel</string> 
+    <string name="text_myData_targetWeight">k.A.</string> 
+    <string name="text_myData_bmiHeader">BMI</string>
+    <string name="text_myData_bmi">k.A.</string>
+    <string name="text_myData_lastWeekHeader">n.v.</string>
+    <string name="text_myData_lastWeek">n.v.</string>
+    <string name="text_myData_thisWeekHeader">n.v.</string>
+    <string name="text_myData_thisWeek">n.v.</string>
 </resources>
