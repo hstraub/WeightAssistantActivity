@@ -29,6 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import au.com.bytecode.opencsv.CSVReader;
@@ -101,7 +102,7 @@ public class WeightAssistantActivity extends Activity {
 			}
 		} );
 
-        Button buttonSimpleGraph = ( Button ) findViewById( R.id.buttonSimpleGraph );
+        ImageButton buttonSimpleGraph = ( ImageButton ) findViewById( R.id.buttonSimpleGraph );
         buttonSimpleGraph.setOnClickListener( new View.OnClickListener( ) {
         	@Override
         	public void onClick(View v) {
@@ -115,7 +116,7 @@ public class WeightAssistantActivity extends Activity {
         	}
         } );
 
-        Button buttonWeekOverviewGraph = ( Button ) findViewById( R.id.buttonWeekGraph );
+        ImageButton buttonWeekOverviewGraph = ( ImageButton ) findViewById( R.id.buttonWeekGraph );
         buttonWeekOverviewGraph.setOnClickListener( new View.OnClickListener( ) {
         	@Override
         	public void onClick(View v) {

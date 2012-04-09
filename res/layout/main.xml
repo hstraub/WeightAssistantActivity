@@ -77,17 +77,34 @@
             android:orientation="horizontal"
             android:weightSum="0.5" >
 
+            <!-- 
             <Button
                 android:id="@+id/buttonSimpleGraph"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/simple_graph" />
-
+			-->
+            <ImageButton
+        		android:id="@+id/buttonSimpleGraph"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:contentDescription="@string/simple_graph"
+        		android:src="@drawable/gewicht" />
+			
+            <!-- 
             <Button
-                android:id="@+id/buttonWeekGraph"
+                android:id="@+id/buttonWeekGraphOld"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/week_graph" />
+            -->
+            
+            <ImageButton
+        		android:id="@+id/buttonWeekGraph"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:contentDescription="@string/week_graph"
+        		android:src="@drawable/wochen" />
         </LinearLayout>
         
         <TextView
