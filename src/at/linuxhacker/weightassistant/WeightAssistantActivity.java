@@ -5,19 +5,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -39,14 +31,12 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class WeightAssistantActivity extends Activity implements TextToSpeech.OnInitListener {
 	private static final int ACTIVITY_ADD_ENTRY = 1;
-	private static final int DIALOG_IMPORT_FILE_ID = 0;
 	private static String C_CSV_DIRNAME = "weighassistant";
 	private static String C_CSV_FILENAME = "weightassistant.csv";
 	private WeightOverviewGraph weightOverviewGraph = new WeightOverviewGraph( );
 	private WeekOverviewGraph weekOverviewGraph = new WeekOverviewGraph( );
 	private WeightMeasurmentSeries weightMeasurmentSeries;
 	private TextView size = null;
-	private TextView targetWeight = null;
 	private TextView thisWeek = null;
 	private TextView lastWeek = null;
 	private TextView lastWeekHeader;
@@ -91,8 +81,6 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
         	@Override
 			public void onClick(View v) {
 				WeightAssistantActivity.this.csvImport( );
-				// FIXME: das muss woanders hin
-				//WeightAssistantActivity.this.dataUpdated = 1;
 			}
 		} );
 
@@ -101,7 +89,6 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
         	@Override
 			public void onClick(View v) {
 				WeightAssistantActivity.this.csvExport( );
-				
 			}
 		} );
 
@@ -202,7 +189,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	DbHelper dbHelper;
     	SQLiteDatabase db;
     	int i = 0;
-    	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + this.C_CSV_DIRNAME;
+    	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + WeightAssistantActivity.C_CSV_DIRNAME;
     	File directory = new File( directoryname );
     	String[] filenames = directory.list( );
     	String filename = directoryname + File.separator + filenames[filenames.length - 1];	
@@ -240,10 +227,10 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd_HHmm" );
     	String filenamePrefix = new String( format.format( now ) );
     	
-    	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + this.C_CSV_DIRNAME;
+    	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + WeightAssistantActivity.C_CSV_DIRNAME;
     	File directory = new File( directoryname );
     	directory.mkdirs( );
-    	String filename = directoryname + File.separator + filenamePrefix + "-" + this.C_CSV_FILENAME;
+    	String filename = directoryname + File.separator + filenamePrefix + "-" + WeightAssistantActivity.C_CSV_FILENAME;
     	CSVWriter writer;
     	DbHelper dbHelper = new DbHelper( this );
     	SQLiteDatabase db = dbHelper.getReadableDatabase( );
