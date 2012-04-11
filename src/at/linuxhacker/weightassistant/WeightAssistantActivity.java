@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -193,8 +194,9 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + WeightAssistantActivity.C_CSV_DIRNAME;
     	File directory = new File( directoryname );
     	String[] filenames = directory.list( );
+    	Arrays.sort( filenames );
     	String filename = directoryname + File.separator + filenames[filenames.length - 1];	
-    	
+
     	dbHelper = new DbHelper( this );
     	db = dbHelper.getWritableDatabase( );
     	db.delete(DbHelper.TABLE, "", null);    	
@@ -214,13 +216,12 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     		toast.show( );
         }
     	db.close( );
+
+    	Toast.makeText( this, "Import von " + i + " Record von File: "
+    			+ filename, Toast.LENGTH_LONG ).show( );
     	
 		this.weightMeasurmentSeries.readAll( );
-		this.fillPersonalData( );
-    	
-		Toast toast = Toast.makeText( this, "Import von " + i + " Record von File: "
-    			+ filename, Toast.LENGTH_LONG );
-    	toast.show( );
+		this.fillPersonalData( );    	
     }
     public void csvExport( ) {
     	int i = 0;
@@ -259,6 +260,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	
     	// Cleanup Directory
     	String[] filenames = directory.list( );
+    	Arrays.sort( filenames );
     	if ( filenames.length > 10 ) {
     		for ( i = 0; i <filenames.length - WeightAssistantActivity.C_MAX_BACKUP_FILE_VERSIONS;
     				i++ ) {
