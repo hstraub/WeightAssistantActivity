@@ -214,7 +214,7 @@ public class WeightAssistantActivity extends Activity {
     public void csvExport( ) {
     	int i = 0;
     	Date now = new Date( );
-    	SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd_HH:mm" );
+    	SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd_HHmm" );
     	String filenamePrefix = new String( format.format( now ) );
     	
     	String directoryname = Environment.getExternalStorageDirectory( ) + File.separator + this.C_CSV_DIRNAME;
