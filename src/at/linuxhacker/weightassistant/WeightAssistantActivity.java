@@ -49,7 +49,6 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 	private TextView targetWeight = null;
 	private TextView thisWeek = null;
 	private TextView lastWeek = null;
-	int dataUpdated = 0;
 	private TextView lastWeekHeader;
 	private TextView thisWeekHeader;
 	private TextToSpeech textToSpeech;
@@ -181,6 +180,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     		if ( resultCode == RESULT_OK ) {
     			this.csvExport( );
     			this.weightMeasurmentSeries.readAll( );
+    			this.fillPersonalData( );
     			this.speekAddEntryComment( );
     		}
     	}
@@ -226,8 +226,11 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     		toast.show( );
         }
     	db.close( );
-    	this.dataUpdated = 1;
-    	Toast toast = Toast.makeText( this, "Import von " + i + " Record von File: "
+    	
+		this.weightMeasurmentSeries.readAll( );
+		this.fillPersonalData( );
+    	
+		Toast toast = Toast.makeText( this, "Import von " + i + " Record von File: "
     			+ filename, Toast.LENGTH_LONG );
     	toast.show( );
     }
