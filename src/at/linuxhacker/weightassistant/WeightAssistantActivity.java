@@ -33,6 +33,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 	private static final int ACTIVITY_ADD_ENTRY = 1;
 	private static String C_CSV_DIRNAME = "weighassistant";
 	private static String C_CSV_FILENAME = "weightassistant.csv";
+	private static int C_MAX_BACKUP_FILE_VERSIONS = 10;
 	private WeightOverviewGraph weightOverviewGraph = new WeightOverviewGraph( );
 	private WeekOverviewGraph weekOverviewGraph = new WeekOverviewGraph( );
 	private WeightMeasurmentSeries weightMeasurmentSeries;
@@ -255,6 +256,16 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	Toast toast = Toast.makeText( this, "Export von " + i + " Records ins File: "
     			+ filename, Toast.LENGTH_LONG );
     	toast.show( );
+    	
+    	// Cleanup Directory
+    	String[] filenames = directory.list( );
+    	if ( filenames.length > 10 ) {
+    		for ( i = 0; i <filenames.length - WeightAssistantActivity.C_MAX_BACKUP_FILE_VERSIONS;
+    				i++ ) {
+    			new File( directory, filenames[i] ).delete( );
+    		}
+    	}
+
     }
 
 	@Override
