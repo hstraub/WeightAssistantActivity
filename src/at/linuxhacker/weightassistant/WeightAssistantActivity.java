@@ -78,22 +78,6 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 			}
 		} );
         
-        Button buttonImport = ( Button ) findViewById( R.id.buttonImport );
-        buttonImport.setOnClickListener( new View.OnClickListener( ) {
-        	@Override
-			public void onClick(View v) {
-				WeightAssistantActivity.this.csvImport( );
-			}
-		} );
-
-        Button buttonExport = ( Button ) findViewById( R.id.buttonExport );
-        buttonExport.setOnClickListener( new View.OnClickListener( ) {
-        	@Override
-			public void onClick(View v) {
-				WeightAssistantActivity.this.csvExport( );
-			}
-		} );
-
         ImageButton buttonSimpleGraph = ( ImageButton ) findViewById( R.id.buttonSimpleGraph );
         buttonSimpleGraph.setOnClickListener( new View.OnClickListener( ) {
         	@Override
@@ -286,7 +270,13 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 		case R.id.itemPrefs:
 			startActivity( new Intent( this, PrefsActivity.class ) );
 			break;
-		}
+		case R.id.itemBackup:
+			this.csvExport( );
+			break;
+		case R.id.itemRestore:
+			this.csvImport( );
+			break;
+	}
 		return true;
 	}
 }

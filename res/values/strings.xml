@@ -29,4 +29,6 @@
     <string name="text_myData_lastWeek">n.v.</string>
     <string name="text_myData_thisWeekHeader">n.v.</string>
     <string name="text_myData_thisWeek">n.v.</string>
+    <string name="titleBackup">Backup</string>
+    <string name="titleRestore">Restore</string>
 </resources>

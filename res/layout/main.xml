@@ -36,34 +36,6 @@
                 android:text="@string/button_display_data" />
         </LinearLayout>
 
-       	<TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:textAppearance="?android:attr/textAppearanceLarge"
-	        android:text="@string/text_dataHandling" />
-       	 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1.0" >
-
-            <Button
-                android:id="@+id/buttonImport"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/button_import" />
-
-            <Button
-                android:id="@+id/buttonExport"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/button_export" />
-        </LinearLayout>
-
 	    <TextView
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
