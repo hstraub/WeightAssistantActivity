@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ import android.widget.Toast;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
-public class WeightAssistantActivity extends Activity {
+public class WeightAssistantActivity extends Activity implements TextToSpeech.OnInitListener {
 	private static final int ACTIVITY_ADD_ENTRY = 1;
 	private static final int DIALOG_IMPORT_FILE_ID = 0;
 	private static String C_CSV_DIRNAME = "weighassistant";
@@ -50,12 +52,14 @@ public class WeightAssistantActivity extends Activity {
 	int dataUpdated = 0;
 	private TextView lastWeekHeader;
 	private TextView thisWeekHeader;
+	private TextToSpeech textToSpeech;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        this.textToSpeech = new TextToSpeech( this, this );
         this.weightMeasurmentSeries = new WeightMeasurmentSeries( WeightAssistantActivity.this );
         this.weightMeasurmentSeries.readAll( );
         
@@ -108,7 +112,6 @@ public class WeightAssistantActivity extends Activity {
         	public void onClick(View v) {
         		Intent intent = null;
         		
-        		WeightAssistantActivity.this.checkAndUpdateData( );
         		weightOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weightOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
@@ -122,7 +125,6 @@ public class WeightAssistantActivity extends Activity {
         	public void onClick(View v) {
         		Intent intent = null;
         		
-        		WeightAssistantActivity.this.checkAndUpdateData( );
         		weekOverviewGraph.setWeightMeasurmentSeries( weightMeasurmentSeries );
         		intent = weekOverviewGraph.execute( WeightAssistantActivity.this );
         		startActivity( intent );
@@ -132,7 +134,19 @@ public class WeightAssistantActivity extends Activity {
         
     }
     
-    private void fillPersonalData() {
+    @Override
+	public void onInit(int status) {
+		// TextToSpeech OnInitListener
+    	if( status == TextToSpeech.SUCCESS ) {
+    		int result = this.textToSpeech.setLanguage( Locale.GERMAN );
+    		if ( result == TextToSpeech.LANG_MISSING_DATA ||
+    				result == TextToSpeech.LANG_NOT_SUPPORTED ) {
+    			Toast.makeText( this, "TextToSpeech nicht verfügbar", Toast.LENGTH_LONG );
+    		}
+    	}	
+	}
+
+	private void fillPersonalData() {
     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( this );
         this.size = ( TextView ) findViewById( R.id.myData_size );
         this.size.setText( prefs.getString( "size", "k.A" ) );
@@ -165,20 +179,26 @@ public class WeightAssistantActivity extends Activity {
 	protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
     	if ( requestCode == WeightAssistantActivity.ACTIVITY_ADD_ENTRY ) {
     		if ( resultCode == RESULT_OK ) {
-    			this.dataUpdated = 1;
     			this.csvExport( );
+    			this.weightMeasurmentSeries.readAll( );
+    			this.speekAddEntryComment( );
     		}
     	}
     }
     
-    protected void checkAndUpdateData( ) {
-    	if ( this.dataUpdated == 1 ) {
-    		this.weightMeasurmentSeries.readAll( );
-    		this.dataUpdated = 0;
+    private void speekAddEntryComment() {
+    	int length = this.weightMeasurmentSeries.measurmentSeries.size( ); 
+    	if ( length > 2 ) {
+    		double diff = this.weightMeasurmentSeries.measurmentSeries.get( length -1 ).getWeight( ) -
+    				this.weightMeasurmentSeries.measurmentSeries.get( length - 2 ).getWeight( );
+    		DecimalFormat format = new DecimalFormat( "0.00" );
+    		String say = "Die Differenz zu gestern beträgt " + format.format( diff ) +
+    				" Kilogramm.";
+    		this.textToSpeech.speak( say, TextToSpeech.QUEUE_ADD, null);
     	}
-    }
-    
-    public void csvImport( ) {
+	}
+
+	public void csvImport( ) {
     	DbHelper dbHelper;
     	SQLiteDatabase db;
     	int i = 0;
