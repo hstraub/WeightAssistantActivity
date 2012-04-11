@@ -16,8 +16,10 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 
 public class WeightOverviewGraph {
 	private XYMultipleSeriesRenderer renderer;
@@ -25,13 +27,18 @@ public class WeightOverviewGraph {
 	private WeightMeasurmentSeries weightMeasurmentSeries;
 	private List<Double> series2;
 	private List<Double> series3;
+	private int secondGraphOrder = 0;
+	private int thirdGraphOrder = 0;
 
 	public Intent execute(Context context) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( context );
+		this.secondGraphOrder = Integer.parseInt( prefs.getString( "prefSecondGraphOrder", "") );
+		this.thirdGraphOrder = Integer.parseInt( prefs.getString( "prefThirdGraphOrder", "" ) );
 		this.dataset = new XYMultipleSeriesDataset();
 		this.renderer = new XYMultipleSeriesRenderer( );
 
-		this.series2 = this.calcAverage( 7 );
-		this.series3 = this.calcAverage( 14 );
+		this.series2 = this.calcAverage( this.secondGraphOrder );
+		this.series3 = this.calcAverage( this.thirdGraphOrder );
 		setChartSettings( );
 		setSeries( );
 		return ChartFactory.getTimeChartIntent(context, this.dataset,
@@ -60,8 +67,8 @@ public class WeightOverviewGraph {
 	
 	protected void setSeries( ) {
 		TimeSeries timeSeries1 = ( TimeSeries ) new TimeSeries( "Gewicht" );
-		TimeSeries timeSeries2 = ( TimeSeries ) new TimeSeries( "7. Ordnung" );
-		TimeSeries timeSeries3 = ( TimeSeries ) new TimeSeries( "14. Ordnung" );
+		TimeSeries timeSeries2 = ( TimeSeries ) new TimeSeries( this.secondGraphOrder + ". Ordnung" );
+		TimeSeries timeSeries3 = ( TimeSeries ) new TimeSeries( this.thirdGraphOrder + ". Ordnung" );
 		
 		int length2 = this.series2.size( );
 		int length3 = this.series3.size( );

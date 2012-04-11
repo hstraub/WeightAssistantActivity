@@ -3,7 +3,9 @@
     <EditTextPreference android:title="Größe in cm"
         android:summary="Eingabe der Größe in cm"
         android:key="size" android:defaultValue="180"/>
-    <EditTextPreference android:title="Zielgewicht" android:summary="Ziengewicht in kg" android:key="prefTargetWeight"/>
+    <EditTextPreference android:title="Zielgewicht" android:summary="Ziengewicht in kg" android:key="prefTargetWeight" />
+    <EditTextPreference android:summary="Welcher Ordnung( 2-x)" android:key="prefSecondGraphOrder" android:title="Zweiter Graph" android:defaultValue="7" />
+    <EditTextPreference android:summary="Welcher Ordnung ( größer als 2. Graph)" android:key="prefThirdGraphOrder" android:title="Dritter Graph" android:defaultValue="14" />
     
 
 </PreferenceScreen>
