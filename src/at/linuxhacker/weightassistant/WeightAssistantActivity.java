@@ -164,7 +164,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	if ( length > 2 ) {
     		double diff = this.weightMeasurmentSeries.measurmentSeries.get( length -1 ).getWeight( ) -
     				this.weightMeasurmentSeries.measurmentSeries.get( length - 2 ).getWeight( );
-    		DecimalFormat format = new DecimalFormat( "0.00" );
+    		DecimalFormat format = new DecimalFormat( "0.0" );
     		String say = "Die Differenz zu gestern beträgt " + format.format( diff ) +
     				" Kilogramm.";
     		this.textToSpeech.speak( say, TextToSpeech.QUEUE_ADD, null);
