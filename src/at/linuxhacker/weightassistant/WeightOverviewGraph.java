@@ -29,18 +29,31 @@ public class WeightOverviewGraph {
 	private List<Double> series3;
 	private int secondGraphOrder = 0;
 	private int thirdGraphOrder = 0;
+	private int minimumMeasuringPoints = 0;
+	private boolean displayOnlyFirstGraph = false;
 
 	public Intent execute(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( context );
-		this.secondGraphOrder = Integer.parseInt( prefs.getString( "prefSecondGraphOrder", "") );
-		this.thirdGraphOrder = Integer.parseInt( prefs.getString( "prefThirdGraphOrder", "" ) );
+		this.minimumMeasuringPoints  = Integer.parseInt( prefs.getString( "prefMinimumMeasuringPointsForGraph", "" ) );
+		if ( this.weightMeasurmentSeries.measurmentSeries.size( ) > this.minimumMeasuringPoints ) {
+			this.secondGraphOrder = Integer.parseInt( prefs.getString( "prefSecondGraphOrder", "") );
+			this.thirdGraphOrder = Integer.parseInt( prefs.getString( "prefThirdGraphOrder", "" ) );
+			this.displayOnlyFirstGraph = false;
+		} else {
+			this.secondGraphOrder = 1;
+			this.thirdGraphOrder = 1;
+			this.displayOnlyFirstGraph = true;
+		}
+		
 		this.dataset = new XYMultipleSeriesDataset();
 		this.renderer = new XYMultipleSeriesRenderer( );
 
 		this.series2 = this.calcAverage( this.secondGraphOrder );
-		this.series3 = this.calcAverage( this.thirdGraphOrder );
+		this.series3 = this.calcAverage( this.thirdGraphOrder );	
+
 		setChartSettings( );
 		setSeries( );
+		
 		return ChartFactory.getTimeChartIntent(context, this.dataset,
 				this.renderer, "yyyy-MM-dd");
 	}
@@ -91,18 +104,20 @@ public class WeightOverviewGraph {
 		r.setPointStyle( PointStyle.TRIANGLE );
 		this.renderer.addSeriesRenderer( r );
 		
-		this.dataset.addSeries( timeSeries2 );
-		r = new XYSeriesRenderer( );
-		r.setColor( Color.RED );
-		r.setPointStyle( PointStyle.DIAMOND );
-		this.renderer.addSeriesRenderer( r );		
-		
-		this.dataset.addSeries( timeSeries3 );
-		r = new XYSeriesRenderer( );
-		r.setColor( Color.YELLOW );
-		r.setPointStyle( PointStyle.TRIANGLE );
-		r.setLineWidth( 5 );
-		this.renderer.addSeriesRenderer( r );		
+		if ( ! this.displayOnlyFirstGraph ) {
+			this.dataset.addSeries( timeSeries2 );
+			r = new XYSeriesRenderer( );
+			r.setColor( Color.RED );
+			r.setPointStyle( PointStyle.DIAMOND );
+			this.renderer.addSeriesRenderer( r );		
+
+			this.dataset.addSeries( timeSeries3 );
+			r = new XYSeriesRenderer( );
+			r.setColor( Color.YELLOW );
+			r.setPointStyle( PointStyle.TRIANGLE );
+			r.setLineWidth( 5 );
+			this.renderer.addSeriesRenderer( r );
+		}
 	}
 	
 	protected List<Double> calcAverage( int order ) {
