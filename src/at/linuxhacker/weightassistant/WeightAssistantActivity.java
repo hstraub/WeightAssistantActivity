@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -54,7 +56,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
         this.weightMeasurmentSeries = new WeightMeasurmentSeries( WeightAssistantActivity.this );
         this.weightMeasurmentSeries.readAll( );
         
-        this.fillPersonalData( );
+        this.updateDisplayData( );
         
         Button buttonNewEntry = ( Button ) findViewById( R.id.buttonAddEntry );
         buttonNewEntry.setOnClickListener( new View.OnClickListener( ) {
@@ -153,7 +155,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     		if ( resultCode == RESULT_OK ) {
     			this.csvExport( );
     			this.weightMeasurmentSeries.readAll( );
-    			this.fillPersonalData( );
+    			this.updateDisplayData( );
     			this.speekAddEntryComment( );
     		}
     	}
@@ -170,6 +172,60 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     		this.textToSpeech.speak( say, TextToSpeech.QUEUE_ADD, null);
     	}
 	}
+    
+    private void updateWeekStatistic( ) {
+    	String[] fields = { "weekStatistic_mo", "weekStatistic_di",
+    			"weekStatistic_mi", "weekStatistic_do", "weekStatistic_fr", 
+    			"weekStatistic_sa", "weekStatistic_so" };
+    	int[] day = { Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY,
+    			Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, 
+    			Calendar.SUNDAY };
+    	
+    	TextView view;
+    	int id;
+    	List<WeeklyStatistic> weeklyList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
+    	int weeklyListLength = weeklyList.size( );
+    	DecimalFormat format = new DecimalFormat( "0.0" );
+    	double diffPerWeek = -0.5;
+    	double thisWeekDelta = 0;
+    	double lastWeekAverage = weeklyList.get( weeklyListLength - 2 ).average;
+    	double lastWeight = lastWeekAverage;
+    	int lastWeightIndex = -1;
+
+    	if ( weeklyListLength > 1 ) {
+    		for ( int i = 0; i < fields.length; i++ ) {
+    			id = getResources( ).getIdentifier( fields[i], "id", this.getPackageName( ) );
+    			view = ( TextView ) findViewById( id );
+    			MeasuringPoint point = weeklyList.get( weeklyListLength - 1 )
+    					.findMeasuringPointForDayOfWeek( day[i] );
+    			if ( point != null ) {
+    				double actualDelta = point.getWeight( ) - lastWeight;
+    				lastWeight = point.getWeight( );
+    				thisWeekDelta += actualDelta;
+    				view.setText( format.format( actualDelta ) );
+    				if ( thisWeekDelta > ( i + 1 ) * ( diffPerWeek /  7 ) ) {
+    					view.setTextColor( Color.RED );
+    				} else {
+    					view.setTextColor( Color.GREEN );
+    				}
+    				lastWeightIndex = i;
+    			} else {
+    				view.setText( "-" );
+    				view.setTextColor( Color.WHITE );
+    			}
+    		}
+    		
+    		int daysToEndOfWeek = fields.length -1 - lastWeightIndex;
+    		double diffPerDay = ( thisWeekDelta - diffPerWeek ) / daysToEndOfWeek;
+    		for ( int i = lastWeightIndex + 1 ; i < fields.length; i++ ) {
+    			id = getResources( ).getIdentifier( fields[i], "id", this.getPackageName( ) );
+    			view = ( TextView ) findViewById( id );
+    			view.setText( format.format( diffPerDay * -1 ) );
+    			view.setTextColor( Color.GRAY );
+    			//view.setText( "x" );
+    		}
+    	}
+    }
 
 	public void csvImport( ) {
     	DbHelper dbHelper;
@@ -205,7 +261,7 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     			+ filename, Toast.LENGTH_LONG ).show( );
     	
 		this.weightMeasurmentSeries.readAll( );
-		this.fillPersonalData( );    	
+		this.updateDisplayData( );    	
     }
     public void csvExport( ) {
     	int i = 0;
@@ -253,7 +309,12 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	}
 
     }
-
+   
+    private void updateDisplayData( ) {
+    	this.fillPersonalData( );
+    	this.updateWeekStatistic( );
+    }
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater( );

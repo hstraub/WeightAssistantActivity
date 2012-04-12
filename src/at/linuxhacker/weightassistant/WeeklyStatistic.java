@@ -46,4 +46,24 @@ public class WeeklyStatistic {
 		test = this.weekOfYear.substring( 5 );
 		return test;
 	}
+	
+	MeasuringPoint findMeasuringPointForDayOfWeek( int dayOfWeek ) {
+		MeasuringPoint point = null;
+		int i;
+		Calendar calendar = Calendar.getInstance( );
+		
+		for ( i = 0; i < this.weeklyPoints.size( ); i++ ) {
+			point = this.weeklyPoints.get( i ); 
+			calendar.setTime( point.getDate( ) );
+			if ( calendar.get( Calendar.DAY_OF_WEEK ) == dayOfWeek ) {
+				break;
+			}
+		}
+		
+		if ( i == this.weeklyPoints.size( ) ) {
+			return null;
+		} else {
+		 return point;
+		}
+	}
 }

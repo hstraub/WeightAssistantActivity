@@ -31,4 +31,23 @@
     <string name="text_myData_thisWeek">n.v.</string>
     <string name="titleBackup">Backup</string>
     <string name="titleRestore">Restore</string>
+    
+    <string name="text_weekStatistic">Plan für diese Woche</string>
+    <string name="text_weekStatistic_lastHeader">VoWo</string>
+    <string name="text_weekStatistic_last">n.v.</string>
+    <string name="text_weekStatistic_moHeader">Mo</string>
+    <string name="text_weekStatistic_mo">nv.</string>
+    <string name="text_weekStatistic_diHeader">Di</string>
+    <string name="text_weekStatistic_di">nv.</string>
+    <string name="text_weekStatistic_miHeader">Mi</string>
+    <string name="text_weekStatistic_mi">nv.</string>
+    <string name="text_weekStatistic_doHeader">Do</string>
+    <string name="text_weekStatistic_do">nv.</string>
+    <string name="text_weekStatistic_frHeader">Fr</string>
+    <string name="text_weekStatistic_fr">nv.</string>
+    <string name="text_weekStatistic_saHeader">Sa</string>
+    <string name="text_weekStatistic_sa">nv.</string>
+    <string name="text_weekStatistic_soHeader">So</string>
+    <string name="text_weekStatistic_so">nv.</string>
+    
 </resources>

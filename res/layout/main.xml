@@ -89,7 +89,9 @@
             android:id="@+id/linearLayoutMyData"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" ><LinearLayout
+            android:orientation="horizontal" >
+            
+            <LinearLayout
                 android:id="@+id/linearLayoutMyData_Size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -194,7 +196,181 @@
             </LinearLayout>
             
 		</LinearLayout>
+
+        <TextView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:text="@string/text_weekStatistic" /> 
+	               		
+        <LinearLayout
+            android:id="@+id/layoutWeekStatistic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_mo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
         
+                <TextView
+                    android:id="@+id/weekStatistic_moHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_moHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_mo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_mo"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_di"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_diHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_diHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_di"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_di"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_mi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_miHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_miHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_mi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_mi"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+            
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_do"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_doHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_doHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_do"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_do"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+            
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_fr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_frHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_frHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_fr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_fr"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+            
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_sa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_saHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_saHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_sa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_sa"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+            
+                
+            <LinearLayout
+                android:id="@+id/layoutWeekStatistic_so"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical" >
+        
+                <TextView
+                    android:id="@+id/weekStatistic_soHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_soHeader" />
+
+                <TextView
+                    android:id="@+id/weekStatistic_so"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_weekStatistic_so"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+            
+            
+            
+		</LinearLayout>
+		
     </LinearLayout>
-    
 </ScrollView>
