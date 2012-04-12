@@ -72,6 +72,7 @@ public class WeekOverviewGraph {
 		// this.renderer.setBarSpacing(0.5);
 		// top, left, button, right
 		this.renderer.setMargins(new int[] { 20, 40, 20, 30 });
+		this.renderer.setZoomButtonsVisible(true);
 	}
 	
 	protected XYMultipleSeriesRenderer buildBarRenderer(int[] colors) {

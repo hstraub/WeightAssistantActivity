@@ -76,6 +76,7 @@ public class WeightOverviewGraph {
 		this.renderer.setPointSize(5f);
 		// top, left, button, right
 		this.renderer.setMargins(new int[] { 20, 40, 40, 30 });
+		this.renderer.setZoomButtonsVisible(true);
 	}
 	
 	protected void setSeries( ) {
