@@ -10,59 +10,11 @@
         android:layout_height="wrap_content"
         android:weightSum="1.0" >
 
-        <LinearLayout
-            android:id="@+id/LinearLayout01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.35"
-            android:weightSum="1.0" >
-
-            <TextView
-                android:id="@+id/TextView01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                android:text="@string/entry_description" />
-
-            <EditText
-                android:id="@+id/EditText01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.30"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:id="@+id/TextView02"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                android:text="@string/entry_kg" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/Button01"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.35"
-            android:text="@string/entry_save" />
-
-        <DatePicker
-            android:id="@+id/DatePicker01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.35" />
-
-        <TimePicker
-            android:id="@+id/TimePicker01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.35" />
-
         <TextView
             android:id="@+id/textEntryDescription"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="0.35"
+            android:layout_height="wrap_content"
             android:text="@string/entry_description" />
 
         <EditText
@@ -71,16 +23,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.30"
             android:inputType="numberDecimal" >
-
+            
             <requestFocus />
-        </EditText>
 
+        </EditText>
+        
         <TextView
             android:id="@+id/textEntryKg"
             android:layout_width="fill_parent"
+            android:layout_weight="0.35"            
             android:layout_height="wrap_content"
-            android:layout_weight="0.35"
             android:text="@string/entry_kg" />
+        
     </LinearLayout>
 
     <Button
@@ -100,5 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />
+
+
 
 </LinearLayout>
