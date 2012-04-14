@@ -311,6 +311,10 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     }
    
     private void updateDisplayData( ) {
+    	// FIXME: das muss besser gehen!
+    	if ( this.weightMeasurmentSeries.measurmentSeries.size( ) == 0 ) {
+    		return;
+    	}
     	this.fillPersonalData( );
     	this.updateWeekStatistic( );
     }
