@@ -3,21 +3,16 @@ package at.linuxhacker.weightassistant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-
 import java.util.List;
-
-
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 
@@ -49,7 +44,12 @@ public class WeightOverviewGraph {
 		this.renderer = new XYMultipleSeriesRenderer( );
 
 		this.series2 = this.calcAverage( this.secondGraphOrder );
-		this.series3 = this.calcAverage( this.thirdGraphOrder );	
+		this.series3 = this.calcAverage( this.thirdGraphOrder );
+		
+		WeightMeasurmentSerieStatistics test =
+				new WeightMeasurmentSerieStatistics( this.weightMeasurmentSeries.measurmentSeries, new int[] { 7, 14 } );
+		test.calcAverageSeries( );
+		
 
 		setChartSettings( );
 		setSeries( );
