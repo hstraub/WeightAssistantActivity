@@ -28,9 +28,9 @@ public class WeightMeasurmentSeries {
 		SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		Date myDate = null;
 		
-		Cursor cur = this.db.query( this.dbHelper.TABLE, 
-				new String[] { this.dbHelper.C_ID, 
-				this.dbHelper.C_DATETIME, this.dbHelper.C_GEWICHT },
+		Cursor cur = this.db.query( DbHelper.TABLE, 
+				new String[] { DbHelper.C_ID, 
+				DbHelper.C_DATETIME, DbHelper.C_GEWICHT },
 				null, null, null, null, null );
 		try {
 			cur.moveToFirst( );
@@ -45,8 +45,6 @@ public class WeightMeasurmentSeries {
 			}
 		} catch ( Exception e ) {
 			System.out.println ("Exception in readAll: " + e );
-			Exception y;
-			y = e;
 		} finally {
 			cur.close( );
 		}
@@ -73,9 +71,7 @@ public class WeightMeasurmentSeries {
 			System.out.println( "Add: " + weekOfYear );
 			this.weeklyHash.get( weekOfYear ).addMeasurePoint( point );
 		} catch( Exception e ) {
-			// FIXME
-			Exception y;
-			y = e;
+			//FIXME: ?
 		}
 	}
 	
