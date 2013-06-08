@@ -7,12 +7,27 @@ import java.util.List;
 public class WeightMeasurmentSerieStatistics {
 	private List<MeasuringPoint> originalMeasurmentSeries;
 	private List<MeasuringPoint> measurmentSeries;
+	//private List<List<Double>> measurmentSeriesDerivatives;
 	private int[] calcOrders;
 	private List<List<Double>> calcSeries;
+	//private List<List<Double>> derivativeSeries;
+
 	
 	WeightMeasurmentSerieStatistics( List<MeasuringPoint> measurmentSeries, int[] calcOrders ) {
 		this.originalMeasurmentSeries = measurmentSeries;
 		this.calcOrders = calcOrders;
+	}
+	
+	int sizeOfStatisticSeries( ) {
+		return this.measurmentSeries.size( );
+	}
+	
+	MeasuringPoint getMeasuringPoint( int position ) {
+		return this.measurmentSeries.get( position );
+	}
+	
+	double getAverageFor( int position, int order ) {
+		return this.calcSeries.get( order ).get( position );
 	}
 	
 	void calcAverageSeries( ) {
@@ -21,16 +36,12 @@ public class WeightMeasurmentSerieStatistics {
 		this.calcSeries = ( List ) new ArrayList<List<Double>>( );
 		List<List<Double>> calculatedSeries = ( List ) new ArrayList<List<Double>>( );
 
-		
-
 		for ( seriesNr = 0; seriesNr < this.calcOrders.length; seriesNr ++) {
 			calculatedSeries.add( this.calcAverage( this.calcOrders[seriesNr] ) );
 			if ( minListLength == -1 || minListLength > calculatedSeries.get( seriesNr ).size( ) ) {
 				minListLength = calculatedSeries.get( seriesNr ).size( );
 			}
 		}
-
-		
 
 		for( pos = this.originalMeasurmentSeries.size( ) - minListLength;
 				pos < this.originalMeasurmentSeries.size( );
@@ -68,4 +79,5 @@ public class WeightMeasurmentSerieStatistics {
 		Collections.reverse( series );
 		return series;
 	}
+	
 }

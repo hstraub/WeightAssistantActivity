@@ -20,6 +20,7 @@ public class WeightOverviewGraph {
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
 	private WeightMeasurmentSeries weightMeasurmentSeries;
+	private WeightMeasurmentSerieStatistics weightMeasurmentSerieStatistics;
 	private List<Double> series2;
 	private List<Double> series3;
 	private int secondGraphOrder = 0;
@@ -43,14 +44,13 @@ public class WeightOverviewGraph {
 		this.dataset = new XYMultipleSeriesDataset();
 		this.renderer = new XYMultipleSeriesRenderer( );
 
-		this.series2 = this.calcAverage( this.secondGraphOrder );
-		this.series3 = this.calcAverage( this.thirdGraphOrder );
+		//this.series2 = this.calcAverage( this.secondGraphOrder );
+		//this.series3 = this.calcAverage( this.thirdGraphOrder );
+		this.weightMeasurmentSerieStatistics = new WeightMeasurmentSerieStatistics( 
+				this.weightMeasurmentSeries.measurmentSeries,
+				new int[] { this.secondGraphOrder, this.thirdGraphOrder }  );
+		this.weightMeasurmentSerieStatistics.calcAverageSeries( );
 		
-		WeightMeasurmentSerieStatistics test =
-				new WeightMeasurmentSerieStatistics( this.weightMeasurmentSeries.measurmentSeries, new int[] { 7, 14 } );
-		test.calcAverageSeries( );
-		
-
 		setChartSettings( );
 		setSeries( );
 		
@@ -60,6 +60,10 @@ public class WeightOverviewGraph {
 	
 	public void setWeightMeasurmentSeries( WeightMeasurmentSeries weightMeasurmentSeries ) {
 		this.weightMeasurmentSeries = weightMeasurmentSeries;
+	}
+	
+	public void setWeightMeasurmentSerieStatistics( WeightMeasurmentSerieStatistics weightMeasurmentSerieStatistics ) {
+		this.weightMeasurmentSerieStatistics = weightMeasurmentSerieStatistics;
 	}
 	
 	protected void setChartSettings( ) {
@@ -78,8 +82,41 @@ public class WeightOverviewGraph {
 		this.renderer.setMargins(new int[] { 20, 40, 40, 30 });
 		this.renderer.setZoomButtonsVisible(true);
 	}
-	
+
 	protected void setSeries( ) {
+		TimeSeries timeSeries1 = ( TimeSeries ) new TimeSeries( "Gewicht" );
+		TimeSeries timeSeries2 = ( TimeSeries ) new TimeSeries( this.secondGraphOrder + ". Ordnung" );
+		TimeSeries timeSeries3 = ( TimeSeries ) new TimeSeries( this.thirdGraphOrder + ". Ordnung" );
+
+		int seriesLength = this.weightMeasurmentSerieStatistics.sizeOfStatisticSeries( );
+		for (int i= 0; i < seriesLength; i++ ) {
+			MeasuringPoint point = this.weightMeasurmentSerieStatistics.getMeasuringPoint( i );
+			timeSeries1.add( point.getDate( ), point.getWeight( ) );
+			timeSeries2.add( point.getDate( ), this.weightMeasurmentSerieStatistics.getAverageFor( i, 0 ) );
+			timeSeries3.add( point.getDate( ), this.weightMeasurmentSerieStatistics.getAverageFor( i, 1 ) );
+		}
+		
+		this.dataset.addSeries( timeSeries1 );
+		XYSeriesRenderer r = new XYSeriesRenderer( );
+		r.setColor( Color.CYAN );
+		r.setPointStyle( PointStyle.TRIANGLE );
+		this.renderer.addSeriesRenderer( r );
+
+		this.dataset.addSeries( timeSeries2 );
+		r = new XYSeriesRenderer( );
+		r.setColor( Color.RED );
+		r.setPointStyle( PointStyle.DIAMOND );
+		this.renderer.addSeriesRenderer( r );		
+
+		this.dataset.addSeries( timeSeries3 );
+		r = new XYSeriesRenderer( );
+		r.setColor( Color.YELLOW );
+		r.setPointStyle( PointStyle.TRIANGLE );
+		r.setLineWidth( 5 );
+		this.renderer.addSeriesRenderer( r );		
+		
+	}
+	protected void setSeriesOld( ) {
 		TimeSeries timeSeries1 = ( TimeSeries ) new TimeSeries( "Gewicht" );
 		TimeSeries timeSeries2 = ( TimeSeries ) new TimeSeries( this.secondGraphOrder + ". Ordnung" );
 		TimeSeries timeSeries3 = ( TimeSeries ) new TimeSeries( this.thirdGraphOrder + ". Ordnung" );
@@ -121,6 +158,7 @@ public class WeightOverviewGraph {
 		}
 	}
 	
+	/*
 	protected List<Double> calcAverage( int order ) {
 		List<Double> series = new ArrayList<Double>( );
 		if ( this.weightMeasurmentSeries.measurmentSeries.size() < order ) {
@@ -138,4 +176,5 @@ public class WeightOverviewGraph {
 		Collections.reverse( series );
 		return series;
 	}
+	*/
 }
