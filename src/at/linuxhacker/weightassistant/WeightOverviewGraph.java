@@ -30,10 +30,10 @@ public class WeightOverviewGraph {
 
 	public Intent execute(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( context );
-		this.minimumMeasuringPoints  = Integer.parseInt( prefs.getString( "prefMinimumMeasuringPointsForGraph", "" ) );
+		this.minimumMeasuringPoints  = Integer.parseInt( prefs.getString( "prefMinimumMeasuringPointsForGraph", "15" ) );
 		if ( this.weightMeasurmentSeries.measurmentSeries.size( ) > this.minimumMeasuringPoints ) {
-			this.secondGraphOrder = Integer.parseInt( prefs.getString( "prefSecondGraphOrder", "") );
-			this.thirdGraphOrder = Integer.parseInt( prefs.getString( "prefThirdGraphOrder", "" ) );
+			this.secondGraphOrder = Integer.parseInt( prefs.getString( "prefSecondGraphOrder", "7") );
+			this.thirdGraphOrder = Integer.parseInt( prefs.getString( "prefThirdGraphOrder", "14" ) );
 			this.displayOnlyFirstGraph = false;
 		} else {
 			this.secondGraphOrder = 1;
