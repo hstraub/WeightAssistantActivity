@@ -185,6 +185,10 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
     	int id;
     	List<WeeklyStatistic> weeklyList = this.weightMeasurmentSeries.getWeeklyStatisticList( );
     	int weeklyListLength = weeklyList.size( );
+    	if ( weeklyListLength < 2 ) {
+    	    // FIXME: this is a quick hack...
+    	    return; 
+    	}
     	DecimalFormat format = new DecimalFormat( "0.0" );
     	double diffPerWeek = -0.5;
     	double thisWeekDelta = 0;
