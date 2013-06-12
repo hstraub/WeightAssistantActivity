@@ -35,6 +35,8 @@
         
         <activity android:name="org.achartengine.GraphicalActivity" />
         
+        <activity android:name="LicenseActivity" />
+        
   	</application>
 
 </manifest>

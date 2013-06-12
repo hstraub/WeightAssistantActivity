@@ -345,6 +345,10 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 		case R.id.itemRestore:
 			this.csvImport( );
 			break;
+        case R.id.action_license_view:
+            Intent license = new Intent( this, LicenseActivity.class );
+            startActivity( license );
+            return true;
 	}
 		return true;
 	}
