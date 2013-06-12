@@ -4,6 +4,7 @@
     <string name="hello">Hello World, WeightAssistantActivity!</string>
     <string name="app_name">WeightAssistant</string>
     <string name="action_license_view">License</string>
+    <string name="action_options">Options</string>
     <string name="entry_description">Gewicht</string>
     <string name="entry_kg">kg</string>
     <string name="entry_save">Speichern</string>

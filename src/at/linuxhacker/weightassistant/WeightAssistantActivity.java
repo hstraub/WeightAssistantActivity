@@ -326,10 +326,8 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater( );
-		inflater.inflate( R.menu.menu, menu);
+		inflater.inflate( R.menu.weight_assistant_main, menu);
 		return true;
-		// TODO Auto-generated method stub
-		//return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override

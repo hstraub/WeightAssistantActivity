@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/itemPrefs"
+        android:title="@string/titlePrefs"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_preferences" />    
+    
+    <item
+        android:id="@+id/menu_options"
+        android:icon="@drawable/ic_menu_options"
+        android:title="@string/action_options"
+        android:orderInCategory="50"
+        android:showAsAction="always">
+        
+      <menu>
+        <item android:id="@+id/itemBackup"
+            android:icon="@drawable/ic_menu_marquee_download"
+            android:title="@string/titleBackup" />
+        
+        <item android:id="@+id/itemRestore"
+            android:icon="@drawable/ic_menu_marquee_upload"
+            android:title="@string/titleRestore" />
+    
+         <item
+             android:id="@+id/action_license_view"
+             android:icon="@drawable/ic_menu_document"
+             android:orderInCategory="200"
+             android:showAsAction="never"
+             android:title="@string/action_license_view" />
+
+      </menu>
+              
+    </item>
+    
+</menu>
