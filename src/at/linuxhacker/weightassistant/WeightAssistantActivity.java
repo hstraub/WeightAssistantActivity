@@ -34,6 +34,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class WeightAssistantActivity extends Activity implements TextToSpeech.OnInitListener {
 	private static final int ACTIVITY_ADD_ENTRY = 1;
+	private static final int ACTIVITY_PREFERENCES = 2;
 	private static String C_CSV_DIRNAME = "weighassistant";
 	private static String C_CSV_FILENAME = "weightassistant.csv";
 	private static int C_MAX_BACKUP_FILE_VERSIONS = 10;
@@ -148,17 +149,6 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
         					weeklyStatistic.get( weeks -1  ).average )
         			);
         }
-    }
-
-	protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
-    	if ( requestCode == WeightAssistantActivity.ACTIVITY_ADD_ENTRY ) {
-    		if ( resultCode == RESULT_OK ) {
-    			this.csvExport( );
-    			this.weightMeasurmentSeries.readAll( );
-    			this.updateDisplayData( );
-    			this.speekAddEntryComment( );
-    		}
-    	}
     }
     
     private void speekAddEntryComment() {
@@ -335,7 +325,8 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 		// TODO Auto-generated method stub
 		switch ( item.getItemId( ) ) {
 		case R.id.itemPrefs:
-			startActivity( new Intent( this, PrefsActivity.class ) );
+    		Intent preferencesConfiguration = new Intent( this, PrefsActivity.class );
+    		startActivityForResult( preferencesConfiguration, ACTIVITY_PREFERENCES );
 			break;
 		case R.id.itemBackup:
 			this.csvExport( );
@@ -350,4 +341,18 @@ public class WeightAssistantActivity extends Activity implements TextToSpeech.On
 	}
 		return true;
 	}
+
+	protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
+		if ( resultCode == RESULT_OK ) {
+			if ( requestCode == WeightAssistantActivity.ACTIVITY_ADD_ENTRY ) {
+				this.csvExport( );
+				this.weightMeasurmentSeries.readAll( );
+				this.updateDisplayData( );
+				this.speekAddEntryComment( );
+			}
+		} else if ( requestCode == WeightAssistantActivity.ACTIVITY_PREFERENCES ) {
+			this.updateDisplayData( );
+		}
+	}
+	
 }
