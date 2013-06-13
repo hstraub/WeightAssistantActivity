@@ -59,20 +59,24 @@ public class WeekOverviewGraph {
 		this.renderer.setChartTitle( "Wochenstatistik" );
 		this.renderer.setXTitle( "KW" );
 		this.renderer.setYTitle( "Gewicht in kg" );
-		this.renderer.setAxesColor( Color.GRAY );
-		this.renderer.setLabelsColor( Color.LTGRAY );
-		this.renderer.setYLabels(10);
-		// setXLabals ist wichtig, sonst überschreibt er das mit den Labels
-		this.renderer.setXLabels( 0 );
+		this.renderer.setAxesColor( Color.BLACK);
+		this.renderer.setLabelsColor( Color.BLACK );
+		this.renderer.setBackgroundColor( Color.WHITE );
+		this.renderer.setApplyBackgroundColor( true );
+		this.renderer.setMarginsColor( 0xffeeeeee );
+		renderer.setXLabelsColor( Color.BLACK );
+		renderer.setYLabelsColor( 0, Color.BLACK );
+		this.renderer.setGridColor( 0x77333333 );
+		this.renderer.setShowGrid( true );
+
+		this.renderer.setXLabels( 7 );
+		this.renderer.setYLabels( 7 );
 		this.renderer.setAxisTitleTextSize( 24 );
-		this.renderer.setChartTitleTextSize( 28 );
 		this.renderer.setLabelsTextSize( 20 );
 		this.renderer.setLegendTextSize( 23 );
 		this.renderer.setPointSize(5f);
-		// this.renderer.setBarSpacing(0.5);
 		// top, left, button, right
 		this.renderer.setMargins(new int[] { 20, 40, 20, 30 });
-		this.renderer.setZoomButtonsVisible(true);
 	}
 	
 	protected XYMultipleSeriesRenderer buildBarRenderer(int[] colors) {
@@ -120,7 +124,7 @@ public class WeekOverviewGraph {
 					);
 		}
 		this.dataset.addSeries( series.toXYSeries( ) );
-		int[] colors = new int[] { Color.CYAN };
+		int[] colors = new int[] { Color.BLUE };
 		this.renderer = this.buildBarRenderer( colors );
 		for ( int i = 0; i < length; i++ ) {
 			String label = weeklyStatisticList.get( i ).getWeekOfTheYearWithoutYear( );
