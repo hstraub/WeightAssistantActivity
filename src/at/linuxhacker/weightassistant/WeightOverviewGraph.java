@@ -82,6 +82,7 @@ public class WeightOverviewGraph {
 		renderer.setYLabelsColor( 0, Color.BLACK );
 		this.renderer.setGridColor( 0x77333333 );
 		this.renderer.setShowGrid( true );
+		this.renderer.setZoomButtonsVisible( true );
 		
 		this.renderer.setXLabels( 7 );
 		this.renderer.setYLabels( 7 );
